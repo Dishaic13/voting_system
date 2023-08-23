@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <string.h>
+
+struct Candidate {
+    char name[50];
+    int votes;
+};
+
+struct Candidate candidates[10]; // Assuming a maximum of 10 candidates
+int candidateCount = 0;
+
+void nominateCandidate() {
+    if (candidateCount < 10) {
+        printf("Enter candidate name: ");
+        scanf("%s", candidates[candidateCount].name);
+        candidates[candidateCount].votes = 0;
+        candidateCount++;
+        printf("Nomination successful!\n");
+    } else {
+        printf("Maximum number of candidates reached.\n");
+    }
+}
+
+int main() {
+    int choice;
+
+    do {
+        printf("1. Nominate Candidate\n");
+        printf("2. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                nominateCandidate();
+                break;
+            case 2:
+                printf("Exiting...\n");
+                break;
+            default:
+                printf("Invalid choice.\n");
+        }
+    } while (choice != 2);
+
+    return 0;
+}
