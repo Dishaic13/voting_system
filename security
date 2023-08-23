@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <string.h>
+
+// Define a structure to store user information
+struct User {
+    char username[50];
+    char password[50];
+};
+
+// Define an array to store user data (assuming a maximum of 100 users)
+struct User users[100];
+int userCount = 0;
+
+// Function to authenticate user credentials
+int authenticate(char *username, char *password) {
+    for (int i = 0; i < userCount; i++) {
+        // Compare entered username and password with stored user credentials
+        if (strcmp(username, users[i].username) == 0 && strcmp(password, users[i].password) == 0) {
+            return 1; // Authentication successful
+        }
+    }
+    return 0; // Authentication failed
+}
+
+int main() {
+    // Sample user registration (you can add more users)
+    strcpy(users[0].username, "admin");
+    strcpy(users[0].password, "admin123");
+    userCount++;
+
+    char enteredUsername[50];
+    char enteredPassword[50];
+
+    printf("Enter username: ");
+    scanf("%s", enteredUsername);
+    printf("Enter password: ");
+    scanf("%s", enteredPassword);
+
+    if (authenticate(enteredUsername, enteredPassword)) {
+        printf("Authentication successful!\n");
+        // Proceed with administrator dashboard or other functionalities
+    } else {
+        printf("Authentication failed.\n");
+    }
+
+    return 0;
+}
