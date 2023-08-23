@@ -1,0 +1,65 @@
+#include <stdio.h>
+#include <string.h>
+
+struct Candidate {
+    char name[50];
+    int votes;
+};
+
+struct Candidate candidates[10]; // Assuming a maximum of 10 candidates
+int candidateCount = 0;
+
+void manageSystem() {
+    int adminChoice;
+
+    printf("Administrator Dashboard\n");
+    printf("1. View Candidates\n");
+    printf("2. View Votes\n");
+    printf("3. Exit Dashboard\n");
+    printf("Enter your choice: ");
+    scanf("%d", &adminChoice);
+
+    switch (adminChoice) {
+        case 1:
+            printf("List of Candidates:\n");
+            for (int i = 0; i < candidateCount; i++) {
+                printf("%d. %s\n", i + 1, candidates[i].name);
+            }
+            break;
+        case 2:
+            printf("Vote Counts:\n");
+            for (int i = 0; i < candidateCount; i++) {
+                printf("%s: %d votes\n", candidates[i].name, candidates[i].votes);
+            }
+            break;
+        case 3:
+            printf("Exiting Administrator Dashboard...\n");
+            break;
+        default:
+            printf("Invalid choice.\n");
+    }
+}
+
+int main() {
+    int choice;
+
+    do {
+        printf("1. Manage System\n");
+        printf("2. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                manageSystem();
+                break;
+            case 2:
+                printf("Exiting...\n");
+                break;
+            default:
+                printf("Invalid choice.\n");
+        }
+    } while (choice != 2);
+
+    return 0;
+}
