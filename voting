@@ -1,0 +1,51 @@
+#include <stdio.h>
+#include <string.h>
+
+struct Candidate {
+    char name[50];
+    int votes;
+};
+
+struct Candidate candidates[10]; // Assuming a maximum of 10 candidates
+int candidateCount = 0;
+
+void vote(int candidateIndex) {
+    if (candidateIndex >= 0 && candidateIndex < candidateCount) {
+        candidates[candidateIndex].votes++;
+        printf("Vote cast for %s.\n", candidates[candidateIndex].name);
+    } else {
+        printf("Invalid candidate.\n");
+    }
+}
+
+int main() {
+    int choice;
+    int loggedInUserIndex = -1; // Assuming the user is logged in
+
+    do {
+        printf("1. Vote\n");
+        printf("2. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                printf("Available candidates:\n");
+                for (int i = 0; i < candidateCount; i++) {
+                    printf("%d. %s\n", i + 1, candidates[i].name);
+                }
+                int selectedCandidate;
+                printf("Select candidate (1-%d): ", candidateCount);
+                scanf("%d", &selectedCandidate);
+                vote(selectedCandidate - 1); // Adjust index for array
+                break;
+            case 2:
+                printf("Exiting...\n");
+                break;
+            default:
+                printf("Invalid choice.\n");
+        }
+    } while (choice != 2);
+
+    return 0;
+}
