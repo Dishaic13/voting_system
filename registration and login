@@ -1,0 +1,101 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_USERS 100
+
+// Structure to hold user information
+typedef struct {
+    char username[50];
+    char password[50];
+    int isCandidate;
+    int hasVoted;
+} User;
+
+// Array to store user data
+User users[MAX_USERS];
+int userCount = 0;
+
+// Function to register a new user
+void registerUser() {
+    if (userCount >= MAX_USERS) {
+        printf("User limit reached. Registration failed.\n");
+        return;
+    }
+
+    User newUser;
+
+    // Prompt for user input
+    printf("Enter username: ");
+    scanf("%s", newUser.username);
+    printf("Enter password: ");
+    scanf("%s", newUser.password);
+    printf("Are you a candidate? (1 for yes, 0 for no): ");
+    scanf("%d", &newUser.isCandidate);
+
+    // Initialize other user fields
+    newUser.hasVoted = 0;
+
+    // Add the new user to the users array
+    users[userCount] = newUser;
+    userCount++;
+
+    printf("Registration successful!\n");
+}
+
+// Function to perform user login
+User *login() {
+    char username[50];
+    char password[50];
+
+    // Prompt for user credentials
+    printf("Enter username: ");
+    scanf("%s", username);
+    printf("Enter password: ");
+    scanf("%s", password);
+
+    // Iterate through the users array to find a matching user
+    for (int i = 0; i < userCount; i++) {
+        if (strcmp(users[i].username, username) == 0 && strcmp(users[i].password, password) == 0) {
+            return &users[i]; // Return a pointer to the user's data
+        }
+    }
+
+    printf("Login failed.\n");
+    return NULL;
+}
+
+int main() {
+    int choice;
+    do {
+        printf("\n1. Register\n");
+        printf("2. Login\n");
+        printf("0. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                registerUser();
+                break;
+            case 2: {
+                User *loggedInUser = login();
+                if (loggedInUser) {
+                    if (loggedInUser->isCandidate) {
+                        printf("Logged in as a candidate.\n");
+                    } else {
+                        printf("Logged in as a voter.\n");
+                    }
+                }
+                break;
+            }
+            case 0:
+                printf("Exiting the application.\n");
+                break;
+            default:
+                printf("Invalid choice. Please select again.\n");
+        }
+    } while (choice != 0);
+
+    return 0;
+}
